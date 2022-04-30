@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "Carbon Footprint Assistant",
+    "description": "Extension finds articles in web shops and displays its carbon footprint",
+    "version": "1.0",
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "storage",
+        "webNavigation"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "action": {},
+    "background": {
+        "service_worker": "background.js"
+    },
+    "icons": {
+        "16": "img/icon-globe-19.jpg"
+    }
+}
