@@ -19,8 +19,8 @@ const retreive_articles_from_html = async () => {
     let article_id = 2;
 
     // Read some data from server
-    fetch(`https://hackathons-348619.ew.r.appspot.com/get/article/footprint/${article_id}`, { mode: 'no-cors' })
-     .then(response => response.json())
+    fetch(`https://hackathons-348619.ew.r.appspot.com/get/article/footprint/${article_id}`)
+        .then(response => response.json())
      .then(data => {
          console.log(data.cbr_level);
 
