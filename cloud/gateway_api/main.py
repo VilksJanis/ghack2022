@@ -1,8 +1,12 @@
 import random
 import json
 
+from datetime import datetime, timezone
+from urllib import response
+
 import flask
 from flask import request, jsonify
+
 
 
 from google.cloud import pubsub_v1
@@ -13,16 +17,23 @@ app = flask.Flask(__name__)
 
 @app.route("/get/article/footprint/<article_id>")
 def get_article_footprint(article_id):
-    return jsonify(random.randint(0,2))
-
+    response = jsonify({"cbr_level": random.randint(0,2)})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route("/post/article/<article_id>", methods=["POST"])
 def post_articles(article_id):
     if request.method == 'POST':
-        data = request.form # a multidict containing POST data
-        json_data = json.loads(data)
-        json_data["article_id"] = article_id
-        publisher.publish(topic_name, data=bytes(json.dumps(json_data), "utf-8"))
+        data = json.loads(request.data)
+
+        if data:
+            payload = dict(
+                article_id=article_id,
+                message=json.dumps(data),
+                timestamp=datetime.now(tz=timezone.utc).timestamp()
+            )
+
+            publisher.publish(topic_name, data=bytes(json.dumps(payload), "utf-8"))
 
     return jsonify(1)
 
